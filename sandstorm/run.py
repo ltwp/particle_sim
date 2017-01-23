@@ -8,10 +8,12 @@ from cloud import Cloud
 # Simulation Setup
 
 n_particles = 10
-n_steps = 100
-step_size = 0.1
+n_steps = 150
+step_size = 0.01
 
-particle_cloud = Cloud(n_particles,0)
+gravity_force = np.matrix([[0], [-1]])
+
+particle_cloud = Cloud(n_particles,gravity_force,0)
 
 # ----------
 # Animation Setup
@@ -22,12 +24,12 @@ dots, = ax.plot([],[],'bo',ms=6) # creates object which will modify with animati
 
 def init():
     global particle_cloud
-    dots.set_data(particle_cloud.locations()[:,0],particle_cloud.locations()[:,1])
+    dots.set_data([],[])
     return dots,
 
 def animate(i):
     global particle_cloud, step_size
-    #  TAKE A STEP
+    particle_cloud.step(step_size)
     dots.set_data(particle_cloud.locations()[:,0],particle_cloud.locations()[:,1])
     return dots,
 
@@ -35,6 +37,6 @@ def animate(i):
 # Do It
 
 init()
-anim = animation.FuncAnimation(fig, animate, init_func=init, frames=n_steps,interval=20,blit=True)
+anim = animation.FuncAnimation(fig, animate, init_func=init, frames=n_steps, interval=20, blit=False)
 anim.save('test_animation.mp4', fps=30, extra_args=['-vcodec','libx264'])
 plt.show()

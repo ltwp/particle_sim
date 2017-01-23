@@ -4,20 +4,33 @@ from particle import Particle
 # ----------
 # Cloud Class - a collection of particles.
 class Cloud(object):
-    def __init__(self,n,force_law):
+    def __init__(self, n, exf, ippf):
         self.particles = []
-        self.ip_force = force_law
+        self.ex_force = exf # expecting a generic vector...?
+        self.ipp_force = ippf # expecting a function with argument d(istance)
         for i in range(n):
             particle = Particle()
             self.particles.append(particle)
 
-    def set_force(self,force_law):
-        self.ip_force = force_law # interparticle force law
+    def set_ex_force(self, exf):
+        self.ex_force = exf # interparticle force law
+        return self.particles
+
+    def set_ipp_force(self, ippf):
+        self.ipp_force = ippf
         return self.particles
 
     def step(self,step_size):
-        # go through particle cloud and increment positions, apply forces to increment velocities
+        # EXTERNAL FORCE
+        for particle in self.particles:
+            particle.accelerate(self.ex_force, step_size)
+            particle.move(step_size)
+            particle.edge_check(1, 1)
         pass
+
+        # INTERNAL FORCE
+
+        # EDGE CONDITIONS
 
     def locations(self):
         locations = np.zeros((1,2))
