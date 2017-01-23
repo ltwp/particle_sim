@@ -26,7 +26,9 @@ class Cloud(object):
             particle.accelerate(self.ex_force, step_size)
             particle.move(step_size)
             particle.edge_check(1, 1)
+
         pass
+        # something iffy here, recreating particles instead of moving them.
 
         # INTERNAL FORCE
 
@@ -35,7 +37,6 @@ class Cloud(object):
     def locations(self):
         locations = np.zeros((1,2))
         for particle in self.particles:
-            #print particle.x
-            locations = np.append(locations,particle.x, axis=0)
+            locations = np.append(locations, particle.x, axis=0)
         locations = np.delete(locations,(0),axis=0) # remove first line of zeros
         return locations

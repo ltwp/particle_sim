@@ -15,6 +15,14 @@ gravity_force = np.matrix([[0], [-1]])
 
 particle_cloud = Cloud(n_particles,gravity_force,0)
 
+# print particle_cloud.locations()
+# print particle_cloud.step(step_size)
+# print '\n\n'
+# print particle_cloud.locations()
+# print particle_cloud.step(step_size)
+# print '\n\n'
+# print particle_cloud.locations()
+
 # ----------
 # Animation Setup
 fig = plt.figure() #creates figure
@@ -38,5 +46,5 @@ def animate(i):
 
 init()
 anim = animation.FuncAnimation(fig, animate, init_func=init, frames=n_steps, interval=20, blit=False)
-anim.save('test_animation.mp4', fps=30, extra_args=['-vcodec','libx264'])
+anim.save('test_animation.m4v', fps=25, extra_args=['-vcodec','libx264'])
 plt.show()

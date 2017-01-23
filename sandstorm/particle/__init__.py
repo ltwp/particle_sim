@@ -10,7 +10,7 @@ class Particle(object):
         self.mass = 1
 
     def accelerate(self, force_vector, step_size):
-        acceleration = np.multiply((1/self.mass), force_vector)
+        acceleration = np.multiply(force_vector, (1/self.mass))
         self.xp = np.add(self.xp, np.multiply(step_size, acceleration))
         return self
 
@@ -20,6 +20,7 @@ class Particle(object):
 
     def edge_check(self, xmax, ymax):
         self.x = self.x % 1
+        return self
 
     def set_velocity(self, velocity):
         self.xp = velocity
